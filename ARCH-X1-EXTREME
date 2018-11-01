@@ -1,0 +1,216 @@
+# ARCH + WIN 10 IN 2 DRIVES BOOT LINUX UEFI
+
+* ping -c2 google.com (make sure you have ethernet or wifi)
+* if it failed (this is for wifi)
+    * systemctl stop dhcpcd@interface
+    * wifi-menu
+* check again
+* fdisk -l 
+    * windows ex.:
+    * /dev/nvme1n1p1    efi system
+    * /dev/nvme1n1p2    microsoft reserved
+    * /dev/nvme1n1p3    microsoft basic data
+    * /dev/nvme1n1p4    windows recovery environment
+    *
+    * linux ex after cfdisk (make efi partition 550 MB, and swap 8GB):
+    * /dev/nvme0n1p1    efi system
+    * /dev/nvme0n1p2    swap
+    * /dev/nvme0n1p3    linux system
+
+* mkfs.vfat -F 32 -n ARCHEFI /dev/nvme0n1p1
+* mkswap -L ARCHSWAP /dev/nvme0n1p2
+* swapon /dev/nvme0n1p2
+* mkfs.ext4 -L ARCHOS /dev/nvme0n1p3
+
+* mount /dev/nvme0n1p3 /mnt
+* mkdir /mnt/boot
+* mount /dev/nvme0n1p1 /mnt/boot
+* check with lsblk
+
+* mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+* grep -E -A 1 ".*United States.*$" /etc/pacman.d/mirrorlist.bak | sed '/--/d' > /etc/pacman.d/mirrorlist
+
+* pacstrap -i /mnt base base-devel intel-ucode wpa_supplicant efibootmgr dialog
+    * choose systemd-resolvconf
+* genfstab -U -Lp /mnt >> /mnt/etc/fstab
+* arch-chroot /mnt /bin/bash
+
+* mkdir /win
+* mount /dev/nvme1n1p1 /win
+* mkdir /boot/EFI
+* cp -r /win/EFI/Microsoft /boot/EFI
+* umount /win
+ 
+* bootctl install
+* vi /boot/loader/loader.conf
+    * default arch
+    * timeout 5
+    * editor no
+* vi /boot/loader/entries/arch.conf
+    * title ArchLinux
+    * linux /vmlinuz-linux
+    * initrd /intel-ucode.img
+    * initrd /initramfs-linux.img
+    * options root=LABEL=ARCHOS rw
+* vi /boot/loader/entries/arch-fallback.conf
+    * title ArchLinux Fallback
+    * linux /vmlinuz-linux
+    * initrd /intel-ucode.img
+    * initrd /initramfs-linux-fallback.img
+    * options root=LABEL=ARCHOS rw
+
+* echo mypcname > /etc/hostname
+* vi /etc/locale.gen
+    * uncomment:  en_US-UTF8 and en_US-ISO-8859-1
+* locale-gen
+* localectl set-locale LANG=en_US.UTF-8
+* ln -sf /usr/share/zoneinfo/US/Mountain /etc/localtime
+* hwclock --systohc --utc
+* vi /etc/hosts
+    * 127.0.0.1    localhost
+    * ::1          localhost
+    * 127.0.0.1    mypcname.localdomain     mypcname
+
+* vi /etc/pacman.conf
+    * uncomment multilib and add:
+    * SigLevel = PackageRequired TrustedOnly
+* pacman -Sy
+
+* pacman -S networkmanager
+* systemctl enable NetworkManager 
+* echo -e "blacklist nouveau\noptions nouveau modeset=0\nalias nouveau off" > /etc/modprobe.d/blacklist-nouveau.conf
+* echo -e "blacklist fbdev\nblacklist nv" > /etc/modprobe.d/blacklist-video.conf
+* vi /etc/mkinitcpio.conf
+    * add blacklist.conf to FILES
+    * "/etc/modprobe.d/blacklist-nouveau.conf" “/etc/modprobe.d/blacklist-video.conf”
+
+* mkinitcpio -p linux
+* passwd  (add root password)
+
+* exit
+* umount -R /mnt
+* reboot (hard power-off if neccesary)
+
+=========================================
+
+* login with root
+* useradd -m -g users -G wheel,audio,video -s /bin/bash username
+* passwd username
+* EDITOR=vi visudo
+    * uncomment:  %wheel ALL=(ALL) ALL
+
+* nmtui
+* pacman -S acpid ntp dbus avahi cups cronie
+* systemctl enable acpid.service ntpd avahi-daemon org.cups.cupsd.service cronie
+
+* vi /etc/ntp.conf
+    * remove ntp servers, add:
+    * server us.pool.ntp.org
+* ntpd -gq
+* date
+* hwclock -w
+* hwclock
+
+* pacman -S bumblebee bbswitch primus mesa xf86-video-intel xf86-input-synaptics 
+    * select libglvnd
+* gpasswd -a username bumblebee
+* systemctl enable bumblebeed.service
+
+* reboot
+
+=========================================
+
+* login with root
+
+* pacman -S xorg-server xorg-xinit xorg-apps 
+* pacman -S xorg-twm xorg-xclock xterm xorg-fonts-type1 otf-overpass ttf-freefont
+* mkfontdir /usr/share/fonts/misc
+* mkfontdir /usr/share/fonts/100dpi
+* mkfontdir /usr/share/fonts/75dpi
+
+* pacman -S nvidia nvidia-settings
+* lspci | grep VGA
+
+* vi /etc/X11/xorg.conf.d/20-intel.conf
+    * Section “Device”
+    *	Identifier	“intel”
+    *	Driver		“intel”
+    *	BusID		“PCI:0:2:0”
+    *   Option 		"AccelMethod" "SNA"
+    *   VendorName	"Intel Corporation"
+    *   BoardName	"Intel 3e9b"
+    * EndSection
+
+* vi /etc/X11/xorg.conf.d/25-nvidia.conf
+    * Section “Device”
+    *	Identifier	“nvidia”
+    *	Driver		“nvidia”
+    *	BusID		“PCI:1:0:0”
+    *   Option		"ConstrainCursor" "off"
+    *	VendorName	"NVIDIA Corporation"
+    *	BoardName	"GP107M GeForce GTX 1050 Ti Mobile"
+    * EndSection
+
+* vi /etc/X11/xorg.conf.d/30-screen.conf
+    * Section "ServerLayout"
+    * 	Identifier	"layout"
+    *	Screen 0	"intel"
+    *	Screen 1	"nvidia"
+    * EndSection
+
+    * Section "Screen"
+    *	Identifier	"intel"
+    *	Device		"intel"
+    * EndSection
+
+    * Section "Screen"
+    *	Identifier	"nvidia"
+    *	Device		"nvidia"
+    *	Option		"AllowEmptyInitialConfiguration" "on"
+    *	Option		"IgnoreDisplayDevices" "CRT"
+    * EndSection
+
+* reboot
+
+=========================================
+
+* login with username
+
+* cp /etc/X11/xinit/xinitrc ~/.xinitrc
+    * comment all other entries, add bottom:
+    * exec i3
+* cp /etc/X11/xinit/xserverrc ~/.xserverrc
+* vi ~/.xerverrc
+    * exec /usr/bin/X -nolisten tcp "$@" vt$XDG_VTNR
+
+* sudo pacman -S alsa-utils 
+* select intel sound card and make sure channels are available
+    * alsamixer
+    * speaker-test -c 2
+    * ctrl-c
+
+* sudo pacman -S i3 
+* sudo pacman -S mesa-demos
+* reboot
+
+=========================================
+
+* login with username
+* startx
+
+* test graphics:
+    * optirun -vv glxgears
+    * check if NVIDIA is on or off
+        * 0000:01:00.0 OFF
+        * 0000:00:00.0 ON
+    * to manually  activate and deactivate NVIDIA
+        * sudo echo ON >> /proc/acpi/bbswitch
+        * sudo echo OFF >> /proc/acpi/bbswitch
+    * or with:     
+        * check nvidia drivers with :  nvidia-smi
+        * check nvidia version with :  cat /proc/driver/nvidia/version
+ 
+=========================================
+
+IF EVERYTHING STARTS OK, RICE YOUR SYSTEM
+

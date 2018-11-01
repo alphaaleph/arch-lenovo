@@ -1,0 +1,40 @@
+*.font: xft:Overpass Mono:size=10
+
+Xft.dpi:			96
+Xft.antialias:			1
+Xft.autohint:			0
+Xft.hinting:			1
+Xft.hintstyle:			hintfull
+Xft.lcddefault:			lcddefault
+Xft.rgba:			rgb
+
+URxvt.font: 			xft:Overpass Mono:size=10:antialias=true
+URxvt.scrollStyle:		rxvt
+URxvt.scrollBar:		false
+URxvt.depth:			32
+URxvt.saveLines:		10000
+URxvt.internalBorder:		5
+URxvt.antialias:		1
+URxvt.cursorBlink:		true
+URxvt.clipboard.autocopy:	true
+URxvt.keysym.Mod4-c:		perl:clipboard:copy
+URxvt.keysym.Mod4-v:		perl:clipboard:copy
+URxvt.clipboard.copycmd:	xclip -i -selection clipboard
+URxvt.clipboard.pastecmd:	xclip -o -selection clipboard
+URxvt.termName:			rxvt-unicode-256color
+URxvt.lineSpace:		1
+URxvt.letterSpace:		-1
+URxvt.iso14755:			false
+URxvt.iso14755_52:		false
+URxvt.loginShell:		true
+URxvt.perl-ext:			default,matcher
+URxvt.url-launcher:		qutebrowser
+URxvt.matcher.button:		1
+URxvt.transparent:		true
+URxvt.shading:			30
+
+rofi.font: 		Overpass Mono Font 10
+
+fg = ${xrdb:color7}
+bg = ${xrdb:color2}
+

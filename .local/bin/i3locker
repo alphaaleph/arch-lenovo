@@ -1,0 +1,5 @@
+#!/bin/bash
+icon="$HOME/Pictures/Lock/ufp.png"
+wall="$HOME/Pictures/Lock/wall.jpg"
+convert "$wall" "$icon" -gravity center -composite "$HOME/Pictures/Lock/lock.png"
+i3lock -i "$HOME/Pictures/Lock/lock.png"

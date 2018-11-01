@@ -1,0 +1,240 @@
+# RICE SYSTEM
+
+======================================================================================
+# APPS
+#
+* sudo pacman -s feh rxvt-unicode qutebrowser ranger zathura
+
+======================================================================================
+# IMAGES
+#
+* mkdir ~/Pictures/Lock
+* mkdir ~/Pictures/Wallpapers
+* get locking and main wallpaper and lock png
+
+======================================================================================
+# VIM
+#
+* yay -S vim-plug
+* vi ~/.vimrc
+    * set backspace=2
+    * set number
+    * syntax on
+    * 
+    * call plug#begin()
+    *         Plug 'dylanaraps/wal'
+    * call plug#end()
+    * 
+    * colorscheme wal 
+* open vim
+    * :PlugInstall
+
+=========================================
+# SCREENSAVER
+#
+* sudo pacman -S xscreensaver
+* vi ~/.xinitrc  (add before exec your wm)
+    * xscreensaver -no-splash &
+
+======================================================================================
+# NEOFETCH
+#
+* sudo pacman -S neofetch
+* vi ~/.bash_profile
+    * [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+* vi ~/.bashrc
+    * neofetch
+    
+======================================================================================
+# AUR PACKAGE MANAGEMENT
+#
+* sudo pacman -S git
+* cd /tmp
+* git clone https://aur.archlinux.org/yay.git
+* cd yay
+* makepkg -si
+
+* sudo vi /etc/pacman.conf
+    * Color
+    * TotalDownload
+    * CheckSpace
+    *
+    * [archlinuxfr]
+    * SigLevel = Never
+    * Server = http://repo.archlinux.fr/$arch
+* sudo pacman -Syu
+
+======================================================================================
+# CONFIGURE i3
+#
+* font pango:Overpass Regular 10
+* # bindsym $mod+d exec dmenu_run
+* bindsym $mod+d exec --no-startup-id rofi -show run
+* comment out bar{} section
+
+* # window colors
+* set_from_resource $bg-color             i3wm.color4     #2f343f
+* set_from_resource $inactive-bg-color    i3wm.color1     #2f343f
+* set_from_resource $text-color           i3wm.color0     #f3f4f5 
+* set_from_resource $inactive-text-color  i3wm.color7     #676E7D
+* set_from_resource $urgent-bg-color      i3wm.color3     #E53935
+
+* # class                         border                  background              text                    indicator       child_border
+* client.focused                  $bg-color               $bg-color               $text-color             #00ff00
+* client.unfocused                $inactive-bg-color      $inactive-bg-color      $inactive-text-color    #00ff00
+* client.focused_inactive         $inactive-bg-color      $inactive-bg-color      $inactive-text-color    #00ff00
+* client.urgent                   $urgent-bg-color        $urgent-bg-color        $text-color             #00ff00
+
+* # apply Xresources
+* exec_always --no-startup-id xrdb ~/.Xresources
+
+* # apply the last colorscheme generated without changing the background by using -n
+* exec_always --no-startup-id wal -R -n
+
+* # audio controls
+* bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
+* bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
+* bindsym XF86AudioMute exec amixer -q set Master mute
+
+* # screen brightness controls (for laptop)
+* bindsym XF86MonBrightnessUp exec xbacklight -inc 20
+* bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+
+* # touchpad controls (for laptop)
+* bindsym XF86TouchpadToggle ~/.config/i3/touchpadtoggle.sh
+
+* # media player controls
+* bindsym XF86AudioPlay exec playerctl play
+* bindsym XF86AudioPause exec playerctl pause
+* bindsym XF86AudioNext exec playerctl next
+* bindsym XF86AudioPrev exec playerctl previous
+
+* # other binding
+* bindsym $mod+Shift+x exec ~/.local/bin/i3locker
+* bindsym Print exec scrot -e 'mv $f ~/Pictures/Screenshots'
+
+* # apps
+* bindsym $mod+mod1+r exec urxvt -e ranger
+* bindsym $mod+mod1+b exec qutebrowser
+* bindsym $mod+mod1+i exec ~/.local/bin/fv1
+* bindsym $mod+mod1+o exec ~/.local/bin/fv2
+* bindsym $mod+mod1+p exec ~/.local/bin/fv3
+
+* # executable
+* exec_always --no-startup-id feh --bg-fill ~/Pictures/Wallpapers/wall.jpg
+
+* # Execute polybar on launch. Script kills current ones on i3 refresh, otherwise they duplicate
+* exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+* # exec --no-startup-id compton -f
+
+======================================================================================
+# I3LOCK
+#
+* sudo pacman -S i3lock
+* vi $HOME/.local/bin/i3locker
+    * #!/bin/bash
+    * icon="$HOME/Pictures/Lock/ufp.png"
+    * wall="$HOME/Pictures/Lock/wall.jpg"
+    * convert "$wall" "$icon" -gravity center -composite "$HOME/Pictures/Lock/lock.png"
+    * i3lock -i "$HOME/Pictures/Lock/lock.png"
+* chmod +x $HOME/.local/bin/i3locker
+* vi $HOME/.local/services/i3locker.service
+    * [Unit]
+    * Description=Starts i3lock at sleep time
+    * Before=sleep.target
+    *
+    * [Service]
+    * User=username
+    * Type=forking
+    * Environment=DISPLAY=:0
+    * ExecStart=/home/username/.local/bin/i3locker
+    * 
+    * [Install]
+    * WantedBy=sleep.target
+* cd /usr/lib/systemd/system
+* ln /home/username/.local/services/i3locker.service /usr/lib/systemd/system/username.i3locker.service 
+* sudo systemctl enable username.i3locker
+* sudo systemctl daemon-reload
+
+======================================================================================
+# POLYBAR
+#
+* yay -S polybar
+* install -Dm644 /usr/share/doc/polybar/config $HOME/.config/polybar/config
+* polybar example
+* vi $HOME/.config/polybar/launch.sh
+    * #!/bin/bash
+    *
+    * killall -q polybar
+    * while pgrep -x polybar >/dev/null; do sleep 1; done
+    * polybar mybar -r
+    * echo "Bars launched..."
+* chmod +x $HOME/.config/polybar/launch.sh
+
+======================================================================================
+# PYWAL
+#
+* sudo pacman -S python-pywal
+* vi $HOME/.bashrc
+    * export GTK_THEME=wal
+
+======================================================================================
+
+# GTK
+#
+* yay -S oomox
+* mkdir .themes
+* cd ~/.themes
+* wal -g -i $HOME/Pictures/Wallpapers/wall.jpg
+* sudo pacman -S lxappearance
+* lxappearance
+    * select your default font for GTK
+
+=========================================
+# ROFI
+#
+* sudo pacman -S rofi
+* mkdir ~/.config/rofi
+* vi $HOME/.config/rofi/config
+    * # dark theme 
+    * rofi.theme: ~/.cache/wal/colors-rofi-dark.rasi
+    *
+    * # Light theme
+    * rofi.theme: ~/.cache/wal/colors-rofi-light.rasi
+    * 
+    * rofi.opacity:                   100
+    * rofi.width:                     20
+
+=========================================
+# XEPHYR
+#
+* make three files as below, for 1, 2, and 3
+* sudo pacman -S xorg-server-xephyr
+* vi $HOME/.local/bin/fv1
+    * #!/bin/bash
+    * # run i3 in a nested server
+    * #
+    * Xephyr -ac -br -screen 960x540 :1.0 &
+    * ZEPHYR_PID_1=$!
+    * sleep 1
+    * DISPLAY=:1.0 exec i3
+    * kill ZEPHYR_PID_1
+* chmod +x $HOME/.local/bin/fv1
+* from Rofi call:
+    * firefox -p default
+    * firefox -no-remote -p d1
+
+=========================================
+# .XRESOURCES
+#
+* vi ~/.Xresources
+    * see saved .Xresources
+
+=========================================
+# SOUND
+#
+* sudo pacman -S alsa-utils
+* check: alsamixer
+* speaker-test -c2
+

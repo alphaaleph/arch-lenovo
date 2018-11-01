@@ -1,0 +1,9 @@
+#!/bin/bash
+# run i3 in a nested server
+#
+Xephyr -ac -br -screen 960x540 :2.0 &
+ZEPHYR_PID_2=$!
+sleep 1
+DISPLAY=:2.0 exec i3
+kill ZEPHYR_PID_2
+

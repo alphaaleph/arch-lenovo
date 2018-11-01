@@ -1,0 +1,194 @@
+[colors]
+background = ${xrdb:color0:#222}
+foreground = ${xrdb:color7:#222}
+background-alt = ${xrdb:color4:#222}
+foreground-alt = ${xrdb:color6:#222}
+primary = ${xrdb:color1:#222}
+secondary = ${xrdb:color2:#222}
+alert = ${xrdb:color3:#222}
+
+[bar/mybar]
+width = 100%
+height = 20
+radius = 0.0
+fixed-center = true
+background = ${colors.background}
+foreground = ${colors.foreground}
+line-size = 0
+line-color = ${colors.secondary}
+border-size = 0
+border-color = ${colors.secondary}
+padding = 0
+module-margin = 1
+font-0 = OverpassMono Nerd Font Mono:pixelsize=10;0
+font-1 = FontAwesome:pixelsize=10;0
+modules-left = date temperature filesystem memory battery xbacklight alsa
+modules-center = i3
+modules-right = cpu eth wlan 
+tray-position = right
+tray-padding = 0
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/i3]
+type = internal/i3
+strip-wsnumbers = true
+; icons
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+; focused = Active workspace on focused monitor
+label-focused = %icon%
+label-focused-foreground = #ffa500
+label-focused-background = ${colors.background}
+label-focused-padding = 1
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 1
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-padding = ${self.label-focused-padding}
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-foreground = ${colors.alert}
+label-urgent-background = ${colors.background}
+label-urgent-padding = 1
+
+[module/date]
+type = internal/date
+interval = 5
+date = %{F#ffa500}%{F-}%a %b %d
+time = %{F#ffa500}%{F-}%I:%M %p
+label = %date% %time%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+label-mounted = %{F#ffa500}%{F-}%percentage_used%%
+label-unmounted = %{F#ffa500}%{F-}OFF
+label-unmounted-foreground = ${colors.alert}
+
+[module/xbacklight]
+type = internal/xbacklight
+format = <label><ramp>
+label = %{F#ffa500}%{F-} 
+ramp-0 =  
+ramp-1 =  
+ramp-2 =  
+ramp-3 =  
+ramp-4 =  
+ramp-5 =  
+
+[module/battery]
+type = internal/battery
+full-at = 99
+battery = BAT0
+adapter = ADP1
+time-format = %H:%M
+format-charging = %{F#ffa500}<animation-charging>%{F-}<label-charging>
+format-discharging = %{F#ffa500}<animation-discharging>%{F-}<label-discharging>
+format-full = <label-full>
+label-charging = %percentage%% 
+label-discharging = %percentage%% 
+label-full = %{F#ffa500}%{F-}100%
+; Only applies if <animation-charging> is used
+animation-charging-0 =  
+animation-charging-1 =  
+; Framerate in milliseconds
+animation-charging-framerate = 750
+; Only applies if <animation-discharging> is used
+animation-discharging-0 =  
+animation-discharging-1 =  
+animation-discharging-2 =  
+animation-discharging-3 =  
+animation-discharging-4 =  
+animation-discharging-5 =  
+animation-discharging-6 =  
+animation-discharging-7 =  
+animation-discharging-8 =  
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+[module/cpu]
+type = internal/cpu
+interval = 3
+label = %{F#ffa500}%{F-}%percentage-cores%
+
+[module/memory]
+type = internal/memory
+interval = 3
+label = %{F#ffa500}%{F-}%gb_used%
+
+[module/temperature]
+type = internal/temperature
+interval = 3
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
+warn-temperature = 60
+label = %{F#ffa500}%{F-}%temperature-c%
+label-warn = TEMP %temperature-c%
+
+[module/eth]
+type = internal/network
+interface = enp0s31f6
+interval = 3
+label-connected = %{F#ffa500}%{F-}%local_ip%%{F#ffa500}%{F-}%upspeed%%{F#ffa500}%{F-}%downspeed%
+label-disconnected = %{F#ffa500}
+
+[module/wlan]
+type = internal/network
+interface = wlp0s20f3
+interval = 3
+label-connected = %{F#ffa500}直%{F-}%local_ip%/%essid%%{F#ffa500}%{F-}%upspeed%%{F#ffa500}%{F-}%downspeed%
+label-disconnected = %{F#ffa500}睊
+
+[module/alsa]
+type = internal/alsa
+interval = 5
+master-soundcard = default
+speaker-soundcard = default
+;headphone-soundcard = default
+master-mixer = Master
+speaker-mixer = Speaker
+;headphone-mixer = Headphone
+format-volume = <label-volume> <bar-volume>
+format-muted = <label-muted>
+label-volume = %{F#ffa500}
+label-muted = %{F#ffa500}
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #f5a70a
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-foreground-7 = #ff5555
+bar-volume-gradient = true
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+; vim:ft=dosini
+;

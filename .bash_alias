@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# ~/.bash_alias
+#
+
+alias c='clear'
+alias d='ls -ahGF'
+alias dl='ls -alGF'
+alias ls='ls --color=auto'
+alias vi3='vim ~/.config/i3/config'
+alias v='vim $1'
+
+alias go_url='godoc -http=":6060"'
+
+alias csize='convert %1 -resize %2%3 %4'
+alias hxdump='xxd -p %1 | tr -d '\n''
+

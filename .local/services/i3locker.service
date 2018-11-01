@@ -1,0 +1,13 @@
+[Unit]
+Description=Starts i3lock at suspend/sleep time
+Before=sleep.target
+
+[Service]
+User=bankai
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/home/bankai/.local/bin/i3locker
+
+[Install]
+WantedBy=sleep.target
+
