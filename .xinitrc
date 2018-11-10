@@ -39,5 +39,6 @@ fi
 # exec xterm -geometry 80x66+0+0 -name login
 
 xscreensaver -no-splash &
+wal -i "$HOME/Pictures/Wallpapers/star-trek-beyond-1920x1080-2016-movies-star-trek-4k-1830.jpg" -o wal-set
 exec i3
 

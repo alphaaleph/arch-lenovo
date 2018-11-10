@@ -25,7 +25,16 @@ export GOBIN=$GOPATH/bin
 export GOPKG=$GOPATH/pkg
 export GOSRC=$GOPATH/src
 
-export PATH=$PATH:$HOME/.local/bin:$GOBIN
+# export PATH=$PATH:$HOME/.local/bin:$GOBIN
+
+function addToPath {
+    case ":$PATH:" in
+        *":$1:"*) :;; # already there
+	*) PATH="$1:$PATH";; # or PATH="$PATH:$1"
+    esac
+}
+
+addToPath $HOME/.local/bin:$GOBIN
 
 neofetch
 

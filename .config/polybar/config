@@ -20,7 +20,7 @@ border-size = 0
 border-color = ${colors.secondary}
 padding = 0
 module-margin = 1
-font-0 = OverpassMono Nerd Font Mono:pixelsize=10;0
+font-0 = Overpass Mono:pixelsize=10;0
 font-1 = FontAwesome:pixelsize=10;0
 modules-left = date temperature filesystem memory battery xbacklight alsa
 modules-center = i3
