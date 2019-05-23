@@ -1,6 +1,61 @@
 # DEVELOPMENT TOOLS
 
 ===================================================================================
-# HASKELL
+# GENERAL
 #
+* sudo pacman -S wget curl code ctags xclip openssh
+* make sure to have ssh key with github (generate new key and add)
+
+===================================================================================
+# HASKELL 
+#
+* sudo pacman -S stack (should include matching ghc)
+* cd ~/.local/bin
+    * ln -s /usr/bin/stack ~/.local/bin/stack 
+* cd to main directory where Haskell projects will reside
+    * stack setup
+* v ~/.stack/config.yaml
+    * update params information
+* create a new project
+    * stack new initproj
+* cd initproj
+    * stack build
+    * stack exec initproj-exe
+* stack install hlint
+* stack install cabal-install
+* stack install happy
+* stack install alex
+* stack install phoityne-vscode
+* stack install ghc-mod
+* mkdir -p /tmp/build
+    * cd /tmp/build
+    * git clone https://github.com/DanielG/ghc-mod -b lierdakil/ghc-8.6.1
+    * git clone https://github.com/DanielG/cabal-helper.git
+    * cd ghc-mod
+    * v stack.yaml
+        * make sure you have "../cabal-helper" under packages
+    * stack build
+* code
+    * add plugins:
+        * Haskelly
+        * Haskell Syntax Highlighting
+        * Haskell-linter
+        * Haskell ghc-mod
+        * Haskell-GHCi Debug Adapter Phoityne
+
+===================================================================================
+# GO 
+#
+* sudo pacman -S go
+* .bashrc
+    * export GOROOT=/usr/lib/go
+    * export GOPATH=$HOME/dev/go
+    * export GOBIN=$GOPATH/bin
+    * export GOBIN=$GOPATH/pkg
+    * export GOBIN=$GOPATH/src
+    * add $GOBIN to $PATH
+* add vim-go to .vimrc plugins
+
+
+
 

@@ -123,7 +123,7 @@
 * login with root
 
 * pacman -S xorg-server xorg-xinit xorg-apps 
-* pacman -S xorg-twm xorg-xclock xterm xorg-fonts-type1 otf-overpass ttf-freefont
+* pacman -S xorg-twm xorg-xclock xterm xorg-fonts-type1 otf-overpass ttf-freefont ttf-monaco
 * mkfontdir /usr/share/fonts/misc
 * mkfontdir /usr/share/fonts/100dpi
 * mkfontdir /usr/share/fonts/75dpi

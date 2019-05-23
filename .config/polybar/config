@@ -20,7 +20,7 @@ border-size = 0
 border-color = ${colors.secondary}
 padding = 0
 module-margin = 1
-font-0 = Overpass Mono:pixelsize=10;0
+font-0 = OverpassMono Nerd Font Mono:pixelsize=10;0
 font-1 = FontAwesome:pixelsize=10;0
 modules-left = date temperature filesystem memory battery xbacklight alsa
 modules-center = i3
@@ -90,31 +90,42 @@ ramp-5 = 
 
 [module/battery]
 type = internal/battery
-full-at = 99
+full-at = 98
 battery = BAT0
-adapter = ADP1
+adapter = AC
 time-format = %H:%M
 format-charging = %{F#ffa500}<animation-charging>%{F-}<label-charging>
-format-discharging = %{F#ffa500}<animation-discharging>%{F-}<label-discharging>
+; format-discharging = %{F#ffa500}<animation-discharging>%{F-}<label-discharging>
+format-discharging = %{F#ffa500}<ramp-capacity>%{F-}<label-discharging>
 format-full = <label-full>
 label-charging = %percentage%% 
 label-discharging = %percentage%% 
 label-full = %{F#ffa500}%{F-}100%
 ; Only applies if <animation-charging> is used
-animation-charging-0 =  
+animation-charging-0 =  
 animation-charging-1 =  
 ; Framerate in milliseconds
 animation-charging-framerate = 750
 ; Only applies if <animation-discharging> is used
-animation-discharging-0 =  
-animation-discharging-1 =  
-animation-discharging-2 =  
-animation-discharging-3 =  
-animation-discharging-4 =  
-animation-discharging-5 =  
-animation-discharging-6 =  
-animation-discharging-7 =  
-animation-discharging-8 =  
+; animation-discharging-0 =  
+; animation-discharging-1 =  
+; animation-discharging-2 =  
+; animation-discharging-3 =  
+; animation-discharging-4 =  
+; animation-discharging-5 =  
+; animation-discharging-6 =  
+; animation-discharging-7 =  
+; animation-discharging-8 =  
+ramp-capacity-0 =  
+ramp-capacity-1 =  
+ramp-capacity-2 =  
+ramp-capacity-3 =  
+ramp-capacity-4 =  
+ramp-capacity-5 =  
+ramp-capacity-6 =  
+ramp-capacity-7 =  
+ramp-capacity-8 =  
+; Framerate in milliseconds
 ; Framerate in milliseconds
 animation-discharging-framerate = 500
 

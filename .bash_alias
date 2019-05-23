@@ -15,3 +15,12 @@ alias go_url='godoc -http=":6060"'
 alias csize='convert %1 -resize %2%3 %4'
 alias hxdump='xxd -p %1 | tr -d '\n''
 
+alias sa='eval $(ssh-agent)'
+alias sk='ssh-add'
+
+alias um-b='sudo umount /mnt/biblioteca'
+alias um-f='sudo umount /mnt/firmamentum'
+
+alias kpulse='pulseaudio -k'
+alias spulse='pulseaudio --start'
+

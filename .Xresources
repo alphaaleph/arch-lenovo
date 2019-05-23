@@ -1,4 +1,4 @@
-*.font: xft:Overpass Mono:size=10
+*.font: xft:Overpass Nerd Font Mono:size=10
 
 Xft.dpi:			        96
 Xft.antialias:			    1
@@ -8,7 +8,7 @@ Xft.hintstyle:			    hintfull
 Xft.lcddefault:			    lcddefault
 Xft.rgba:			        rgb
 
-URxvt.font: 			    xft:Overpass Mono:size=10:antialias=true
+URxvt.font: 			    xft:OverpassMono Nerd Font Mono:size=10:antialias=true
 URxvt.scrollStyle:		    rxvt
 URxvt.scrollBar:		    false
 URxvt*depth:			    32
@@ -17,8 +17,6 @@ URxvt.internalBorder:		5
 URxvt.antialias:		    1
 URxvt.cursorBlink:		    true
 URxvt.clipboard.autocopy:	true
-URxvt.keysym.Mod4-c:		perl:clipboard:copy
-URxvt.keysym.Mod4-v:		perl:clipboard:copy
 URxvt.clipboard.copycmd:	xclip -i -selection clipboard
 URxvt.clipboard.pastecmd:	xclip -o -selection clipboard
 URxvt.termName:			    rxvt-unicode-256color
@@ -34,8 +32,13 @@ URxvt*inheritPixmap:        true
 URxvt*transparent:		    true
 URxvt*shading:              25
 
-rofi.font: 		            Overpass Mono Font 10
+URxvt.keysym.Mod4-c:		    perl:clipboard:copy
+URxvt.keysym.Mod4-v:		    perl:clipboard:paste
+URxvt.keysym.Control-Shift-N:   \033[1;4E
+URxvt.keysym.Control-Shift-T:   \033[1;54
 
-fg = ${xrdb:color7}
-bg = ${xrdb:color2}
+rofi.font: 		            OverpassMono Nerd Font Mono 10
+
+!fg = ${xrdb:color7}
+!bg = ${xrdb:color2}
 

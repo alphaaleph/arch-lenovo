@@ -1,0 +1,14 @@
+" ======================================================
+" TAG BAR
+:help tagbar
+
+" ======================================================
+" TABULAR
+:help tabular
+
+" ======================================================
+" SEARCH TASKS
+:SearchTasks .              " search in root directory
+:SearchTasks app/*.py       " search in directory app/ in files .py
+:SearchTasksGrep **/*.php   " search with grep 
+
