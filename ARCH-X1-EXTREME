@@ -180,7 +180,7 @@
     * comment all other entries, add bottom:
     * exec i3
 * cp /etc/X11/xinit/xserverrc ~/.xserverrc
-* vi ~/.xerverrc
+* vi ~/.xserverrc
     * exec /usr/bin/X -nolisten tcp "$@" vt$XDG_VTNR
 
 * sudo pacman -S alsa-utils 
