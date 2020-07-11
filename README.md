@@ -1,4 +1,4 @@
-﻿# ARCH LENOVO
+﻿# Arch Lenovo
 
 Repository to hold the ArchLinux installation, and ricing, of my Lenovo ThinkPad X1 Extreme. 
 
@@ -18,13 +18,13 @@ Repository to hold the ArchLinux installation, and ricing, of my Lenovo ThinkPad
 ## Ricing Images
 
 
-![ArchLinux with i3Lock login](https://github.com/alphaaleph/arch-lenovo/images/tree/master/ibsen_i3lock_login.png)
+![ArchLinux with i3Lock login](https://github.com/alphaaleph/arch-lenovo/blob/master/images/ibsen_i3lock_login.png)
 
 
-![ArchLinux with i3 desk](https://github.com/alphaaleph/arch-lenovo/images/tree/master/ibsen_arch_i3_desk.png)
+![ArchLinux with i3 desk](https://github.com/alphaaleph/arch-lenovo/blob/master/images/ibsen_arch_i3_desk.png)
 
 
-![ArchLinux with Polybar and Rofi](https://github.com/alphaaleph/arch-lenovo/tree/master/images/ibsen_polybar_rofi.png)
+![ArchLinux with Polybar and Rofi](https://github.com/alphaaleph/arch-lenovo/blob/master/images/ibsen_polybar_rofi.png)
 
 
-![ArchLinux with i3Lock login](https://github.com/alphaaleph/arch-lenovo/tree/master/images/ibsen_i3wm_ranger.png)
+![ArchLinux with i3 WM and Ranger](https://github.com/alphaaleph/arch-lenovo/blob/master/images/ibsen_i3wm_ranger.png)
